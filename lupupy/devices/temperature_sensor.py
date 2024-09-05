@@ -24,9 +24,9 @@ class LupusecTemperatureSensor(LupusecDevice):
     @property
     def temperature(self):
         """Get sensor temperature."""
-        return f"{self._temperature}°C"
+        return self._temperature
 
     @property
     def humidity(self):
         """Get sensor humidity."""
-        return f"{self._humidity}%"
+        return self._humidity
