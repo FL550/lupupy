@@ -4,6 +4,12 @@ import logging
 
 import lupupy.constants as CONST
 
+import re
+
+regex_temp = re.compile("{WEB_MSG_TS_DEGREE}(\\d+\\.\\d+)")
+regex_humi = re.compile("{WEB_MSG_RH_HUMIDITY}(\\d+)")
+
+
 class LupusecDevice(object):
     """Class to represent each Lupusec device."""
 
@@ -67,6 +73,10 @@ class LupusecDevice(object):
             self._json_state['status'] = json_state['status']
         elif self._type == CONST.TYPE_TEMPERATURE_HUMIDITY_SENSOR:
             self._json_state['status'] = json_state['status']
+            m = regex_temp.search(self._json_state.get("status"))
+            self._temperature = m.group(1) if m else None
+            m = regex_humi.search(self._json_state.get("status"))
+            self._humidity = m.group(1) if m else None
         else:
             self._json_state.update(
                 {k: json_state[k] for k in json_state if self._json_state.get(k)})
