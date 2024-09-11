@@ -3,8 +3,8 @@
 from lupupy.devices import LupusecDevice
 import re
 
-regex_temp = re.compile("{WEB_MSG_TS_DEGREE}(\d+\.\d+)")
-regex_humi = re.compile("{WEB_MSG_RH_HUMIDITY}(\d+)")
+regex_temp = re.compile("{WEB_MSG_TS_DEGREE}(\\d+\\.\\d+)")
+regex_humi = re.compile("{WEB_MSG_RH_HUMIDITY}(\\d+)")
 
 
 class LupusecTemperatureSensor(LupusecDevice):

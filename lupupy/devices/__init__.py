@@ -34,7 +34,7 @@ class LupusecDevice(object):
     def refresh(self):
         """Refresh a device"""
         # new_device = {}
-        if self.type in CONST.BINARY_SENSOR_TYPES:
+        if self.type in CONST.BINARY_SENSOR_TYPES or self.type == CONST.TYPE_TEMPERATURE_HUMIDITY_SENSOR:
             response = self._lupusec.get_sensors()
             for device in response:
                 if device['device_id'] == self._device_id:
@@ -46,7 +46,7 @@ class LupusecDevice(object):
             response = self._lupusec.get_panel()
             self.update(response)
             return response
-        
+
         elif self.type == CONST.TYPE_POWER_SWITCH:
             response = self._lupusec.get_power_switches()
             for pss in response:
@@ -64,6 +64,8 @@ class LupusecDevice(object):
         Only updates if it already exists in the device.
         """
         if self._type in CONST.BINARY_SENSOR_TYPES:
+            self._json_state['status'] = json_state['status']
+        elif self._type == CONST.TYPE_TEMPERATURE_HUMIDITY_SENSOR:
             self._json_state['status'] = json_state['status']
         else:
             self._json_state.update(
